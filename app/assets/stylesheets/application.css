@@ -26,6 +26,9 @@
 * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-coming-soon/blob/master/LICENSE)
 */
 
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
 html {
  height: 100%;
 }
@@ -63,7 +66,7 @@ video {
 
 @media (pointer: coarse) and (hover: none) {
  body {
-   background: url("../img/bg-mobile-fallback.jpg") #002E66 no-repeat center center scroll;
+   background: url("../images/bg-mobile-fallback.jpg") #002E66 no-repeat center center scroll;
    background-position: cover;
  }
  body video {
