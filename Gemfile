@@ -34,6 +34,12 @@ gem 'jbuilder', '~> 2.5'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '4.1.1'
 
+# webpacker, the theme might need this
+gem 'webpacker', '~> 3.5'
+
+# User Twitter Bootsrap library for front-end UI and layout
+gem 'bootstrap', '~> 4.1.3'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
