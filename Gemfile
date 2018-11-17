@@ -43,6 +43,11 @@ gem 'bootstrap', '~> 4.1.3'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# segment for analytics
+gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics'
+
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
