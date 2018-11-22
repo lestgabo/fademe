@@ -46,7 +46,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # segment for analytics
 gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics'
 
+# gibbon gem is for Mailchimp mailing listen
+gem 'gibbon'
 
+# for secrets
+gem 'dotenv-rails', groups: [:development, :test]
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
