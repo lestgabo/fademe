@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'pages#landingpage'
+  resources :visitors, only: [:new, :create]
+  root to: 'visitors#new'
 
 end

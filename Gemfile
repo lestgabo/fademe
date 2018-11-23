@@ -49,8 +49,8 @@ gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics'
 # gibbon gem is for Mailchimp mailing listen
 gem 'gibbon'
 
-# for secrets
-gem 'dotenv-rails', groups: [:development, :test]
+# simple form - used by learn rails daniel kehoe book
+gem 'simple_form'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

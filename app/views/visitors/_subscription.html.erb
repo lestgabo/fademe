@@ -1,0 +1,12 @@
+<section>
+  <div class="column">
+
+    <div class="form-centered">
+      <%= simple_form_for @visitor, :html => {:class => 'form-inline'} do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :email, label: false, :placeholder => 'Your email address...' %>
+        <%= f.button :submit, "Sign up", :class => "submit" %>
+      <% end %>
+    </div>
+  </div>
+</section>
