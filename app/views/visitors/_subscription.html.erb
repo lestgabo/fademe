@@ -3,8 +3,8 @@
 
     <div class="form-centered">
       <%= simple_form_for @visitor, :html => {:class => 'form-inline'} do |f| %>
-        <%= f.error_notification %>
-        <%= f.input :email, label: false, :placeholder => 'Your email address...' %>
+        <%= f.input :email, label: false, :placeholder => 'Enter email here...' %>
+        <%= f.full_error :email %>
         <%= f.button :submit, "Sign up", :class => "submit" %>
       <% end %>
     </div>
