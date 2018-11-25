@@ -12,7 +12,7 @@ class VisitorsController < ApplicationController
       flash[:notice] = "Signed up #{@visitor.email}."
       redirect_to root_path
     else
-      render :new
+      render 'new'
     end
   end
 

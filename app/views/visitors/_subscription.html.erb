@@ -1,12 +1,18 @@
 <section>
-  <div class="column">
-
-    <div class="form-centered">
-      <%= simple_form_for @visitor, :html => {:class => 'form-inline'} do |f| %>
-        <%= f.input :email, label: false, :placeholder => 'Enter email here...' %>
-        <%= f.full_error :email %>
-        <%= f.button :submit, "Sign up", :class => "submit" %>
-      <% end %>
+  <%= form_for @visitor do |f| %>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <%= f.text_field :email, class: 'form-control'  %>
+      </div>
     </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.submit "Sign up", class: 'btn btn-success btn-block' %>
+      </div>
+    </div>
+
   </div>
+  <%= render 'error_messages', object: f.object %>
+  <% end %>
 </section>
