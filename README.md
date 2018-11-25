@@ -9,3 +9,4 @@ Cannabis users. This is for you. Fademe allows you to easily record when you get
 
 Release date is February 2019.
 ```
+<img width="1432" alt="fademe_version_1" src="https://user-images.githubusercontent.com/16982271/48975021-27115d00-f01c-11e8-9947-0d25a9f2b468.png">
