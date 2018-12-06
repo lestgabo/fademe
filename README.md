@@ -5,6 +5,14 @@ Using Flutter means it will go live on both Android and iOS phones.
 This is a landing page for exposure. Email sign up to gauge user interest.   
 
 ```
+meta_description: "Fademe is a Flutter application. A weed diary app. Smoke too much weed? Smoke too little? Spending too much on weed? Find out with Fademe.
+
+Users will be able to document their use of cannabis. They have an option to record what, when, where, how much, or even take a selfie with their bud.
+
+Note: Flutter application means it will release for both Android and iOS phones."
+```
+
+```
 Cannabis users. This is for you. Fademe allows you to easily record when you get high, what strain you used, and how much you used.
 
 Release date is February 2019.
