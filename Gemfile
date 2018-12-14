@@ -34,6 +34,8 @@ gem 'jbuilder', '~> 2.5'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '4.1.1'
 
+gem 'rails-ujs'
+
 # webpacker, the theme might need this
 gem 'webpacker', '~> 3.5'
 
