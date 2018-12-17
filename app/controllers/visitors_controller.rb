@@ -24,7 +24,7 @@ class VisitorsController < ApplicationController
       end
 
       if (member_status == nil) || (member_status != "subscribed")
-        result = mailchimp.lists(list_id).members.create(
+        result = mailchimp.lists(list_id).members.upsert(
           body: {
             email_address: input_email,
             status: 'subscribed'
