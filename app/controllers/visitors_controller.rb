@@ -19,8 +19,8 @@ class VisitorsController < ApplicationController
       begin
         member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
       rescue Exception => e
-        puts "Houston, we have a problem: #{e.message} - #{e.raw_body}"
-      end      
+        Rails.logger.info(e)      
+      end
 
       if member_status == "subscribed"
         flash[:notice] = "You are already subscribed!"
@@ -32,7 +32,7 @@ class VisitorsController < ApplicationController
           }
         )
         flash[:notice] = "Thank you for signing up #{input_email}!"
-      end
+      end  
       redirect_to root_path
     else
       render 'new'
