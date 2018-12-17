@@ -20,11 +20,10 @@ class VisitorsController < ApplicationController
 
       begin
         member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
-      rescue StandardError => e
-        Rails.logger.error("failed becuz #{exception.detail}")
+      rescue
       end
 
-      if member_status == nil
+      if (member_status == nil) || (member_status != "subscribed")
         result = mailchimp.lists(list_id).members.create(
           body: {
             email_address: input_email,
