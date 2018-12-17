@@ -17,9 +17,14 @@ class VisitorsController < ApplicationController
 
       member_id = Digest::MD5.hexdigest(input_email)
       
+
       begin
         member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
-      rescue
+      rescue Gibbon::MailChimpError => exception
+        Rails.logger.error("failed becuz #{exception.detail}")
+      end
+
+      if member_status != "subscribed" && member_status != "unsubscribed"
         result = mailchimp.lists(list_id).members.create(
           body: {
             email_address: input_email,
@@ -28,9 +33,7 @@ class VisitorsController < ApplicationController
         Rails.logger.info("Subscribed #{input_email} to MailChimp") if result
         flash[:notice] = "Thank you for signing up #{input_email}!"
         redirect_to root_path
-      end
-      
-      if member_status == "subscribed"
+      elsif member_status == "subscribed"
         flash[:notice] = "You are already subscribed!"
         redirect_to root_path
       elsif member_status == "unsubscribed"
