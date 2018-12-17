@@ -20,11 +20,12 @@ class VisitorsController < ApplicationController
 
       begin
         member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
-      rescue
+      rescue Gibbon::MailChimpError => e
+        puts "Houston, we have a problem: #{e.message} - #{e.raw_body}"
       end
 
       if (member_status == nil) || (member_status != "subscribed")
-        result = mailchimp.lists(list_id).members.upsert(
+        result = mailchimp.lists(list_id).members.create(
           body: {
             email_address: input_email,
             status: 'subscribed'
