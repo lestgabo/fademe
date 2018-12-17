@@ -31,6 +31,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# for mobile
+gem 'browser'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '4.1.1'
 

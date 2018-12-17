@@ -35,14 +35,13 @@ class VisitorsController < ApplicationController
           })
 
         Rails.logger.info("Subscribed #{input_email} to MailChimp") if result
-        flash[:success] = "Thank you for signing up #{input_email}."
+        flash[:notice] = "Thank you for signing up #{input_email}."
         redirect_to root_path
       end
     else
       render 'new'
     end
   end
-
 
   private
 
