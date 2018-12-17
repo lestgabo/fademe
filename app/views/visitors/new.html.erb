@@ -7,7 +7,11 @@
   <div class="masthead-bg"></div>
   <div class="container h-100">
     <div class="row h-75">
+    <% if browser.device.mobile? %>
+      <div class="staticTopMobile col-12">
+    <% else %>
       <div class="staticTop col-12">
+    <% end %>
         <div class="masthead-content text-white py-5 py-md-0">
           <h1 class="mb-3">Coming Soon!</h1>
           <p class="mb-4">
@@ -26,6 +30,7 @@
             Sign up below to be an early user of Fademe.
           </p>
           <%= render "subscription" %>
+          <%= render 'layouts/messages' %>
         </div>
       </div>
     </div>
