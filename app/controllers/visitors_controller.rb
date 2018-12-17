@@ -13,6 +13,9 @@ class VisitorsController < ApplicationController
       mailchimp = Gibbon::Request.new(api_key: Rails.application.credentials[Rails.env.to_sym][:mailchimp_api_key], symbolize_keys: true)
       list_id = Rails.application.credentials[Rails.env.to_sym][:mailchimp_list_id]
 
+      mailchimp.timeout = 30
+      gibbon.open_timeout = 30
+
       # check for 2x subscribers (why you do this?) https://stackoverflow.com/questions/50194825/check-if-member-exists-using-mailchimp-3-0-api-and-gibbon-rails?rq=1
 
       member_id = Digest::MD5.hexdigest(input_email)
@@ -25,8 +28,9 @@ class VisitorsController < ApplicationController
 
         mailchimp.lists(list_id).members(member_id).update(body: {interests: {'interest_id': true}})
 
-      rescue Exception
-
+      rescue Exception => e
+        puts "FUCK MAN"
+        puts e
         if (member_status == nil) || (member_status != "subscribed")
           result = mailchimp.lists(list_id).members.create(
             body: {
