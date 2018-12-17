@@ -15,32 +15,33 @@ class VisitorsController < ApplicationController
 
       # check for 2x subscribers (why you do this?) https://stackoverflow.com/questions/50194825/check-if-member-exists-using-mailchimp-3-0-api-and-gibbon-rails?rq=1
 
+      member_id = Digest::MD5.hexdigest(input_email)
+      
       begin
-        member_id = Digest::MD5.hexdigest(input_email)
         member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
-        
-        if member_status == "subscribed"
-          flash[:notice] = "You are already subscribed!"
-          redirect_to root_path
-        elsif member_status == "unsubscribed"
-          flash[:danger] = "You already unsubscribed!"
-          redirect_to root_path
-        end
-
-      rescue 
+      rescue
         result = mailchimp.lists(list_id).members.create(
           body: {
             email_address: input_email,
             status: 'subscribed'
           })
-
         Rails.logger.info("Subscribed #{input_email} to MailChimp") if result
         flash[:notice] = "Thank you for signing up #{input_email}!"
         redirect_to root_path
       end
+      
+      if member_status == "subscribed"
+        flash[:notice] = "You are already subscribed!"
+        redirect_to root_path
+      elsif member_status == "unsubscribed"
+        flash[:danger] = "You already unsubscribed!"
+        redirect_to root_path
+      end
+
     else
       render 'new'
     end
+
   end
 
   private
