@@ -16,7 +16,7 @@ class VisitorsController < ApplicationController
       list_id = Rails.application.credentials[Rails.env.to_sym][:mailchimp_list_id]
       member_id = Digest::MD5.hexdigest(input_email)
    
-      mailchimp.lists(list_id).members(input_email).upsert(
+      mailchimp.lists(list_id).members(member_id).upsert(
         body: {
           email_address: input_email,
           status: 'subscribed'
@@ -24,7 +24,7 @@ class VisitorsController < ApplicationController
       )
       flash[:notice] = "Thank you for signing up #{input_email}!"
 
-      redirect_to root_path
+      render 'new'
     else
       render 'new'
     end
