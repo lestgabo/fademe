@@ -16,13 +16,26 @@ class VisitorsController < ApplicationController
       list_id = Rails.application.credentials[Rails.env.to_sym][:mailchimp_list_id]
       member_id = Digest::MD5.hexdigest(input_email)
    
-      mailchimp.lists(list_id).members(member_id).upsert(
-        body: {
-          email_address: input_email,
-          status: 'subscribed'
-        }
-      )
-      flash[:notice] = "Thank you for signing up #{input_email}!"
+
+      begin
+        member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
+      rescue Gibbon::MailChimpError => e
+        puts "Houston, we have a problem: #{e.message} - #{e.raw_body}"
+      end
+
+      if (member_status != "unsubscribed") && (member_status != "subscribed")
+        mailchimp.lists(list_id).members(member_id).upsert(
+          body: {
+            email_address: input_email,
+            status: 'subscribed'
+          }
+        )
+        flash[:notice] = "Thank you for signing up #{input_email}!"
+      elsif member_status == "subscribed"
+        flash[:notice] = "You are already subscribed!"
+      elsif member_status == "unsubscribed"
+        flash[:danger] = "You already unsubscribed!"
+      end
 
       render 'new'
     else
