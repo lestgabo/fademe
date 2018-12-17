@@ -25,7 +25,7 @@ class VisitorsController < ApplicationController
 
         mailchimp.lists(list_id).members(member_id).update(body: {interests: {'interest_id': true}})
 
-      rescue Gibbon::MailChimpError => e
+      rescue Exception
 
         if (member_status == nil) || (member_status != "subscribed")
           result = mailchimp.lists(list_id).members.create(
@@ -40,7 +40,7 @@ class VisitorsController < ApplicationController
         elsif member_status == "unsubscribed"
           flash[:danger] = "You already unsubscribed!"
         end
-        
+
       end
 
       # if (member_status == nil) || (member_status != "subscribed")
