@@ -19,25 +19,43 @@ class VisitorsController < ApplicationController
       
 
       begin
-        member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
-      rescue Gibbon::MailChimpError => e
-        puts "Houston, we have a problem: #{e.message} - #{e.raw_body}"
-      end
+        # member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
 
-      if (member_status == nil) || (member_status != "subscribed")
-        result = mailchimp.lists(list_id).members.create(
-          body: {
-            email_address: input_email,
-            status: 'subscribed'
-          })
-        Rails.logger.info("Subscribed #{input_email} to MailChimp") if result
-        flash[:notice] = "Thank you for signing up #{input_email}!"
-      elsif member_status == "subscribed"
-        flash[:notice] = "You are already subscribed!"
-      elsif member_status == "unsubscribed"
-        flash[:danger] = "You already unsubscribed!"
+        member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
+
+        mailchimp.lists(list_id).members(member_id).update(body: {interests: {'interest_id': true}})
+
+      rescue Gibbon::MailChimpError => e
+
+        if (member_status == nil) || (member_status != "subscribed")
+          result = mailchimp.lists(list_id).members.create(
+            body: {
+              email_address: input_email,
+              status: 'subscribed'
+            })
+          Rails.logger.info("Subscribed #{input_email} to MailChimp") if result
+          flash[:notice] = "Thank you for signing up #{input_email}!"
+        elsif member_status == "subscribed"
+          flash[:notice] = "You are already subscribed!"
+        elsif member_status == "unsubscribed"
+          flash[:danger] = "You already unsubscribed!"
+        end
         
       end
+
+      # if (member_status == nil) || (member_status != "subscribed")
+      #   result = mailchimp.lists(list_id).members.create(
+      #     body: {
+      #       email_address: input_email,
+      #       status: 'subscribed'
+      #     })
+      #   Rails.logger.info("Subscribed #{input_email} to MailChimp") if result
+      #   flash[:notice] = "Thank you for signing up #{input_email}!"
+      # elsif member_status == "subscribed"
+      #   flash[:notice] = "You are already subscribed!"
+      # elsif member_status == "unsubscribed"
+      #   flash[:danger] = "You already unsubscribed!"
+      # end
       redirect_to root_path
     else
       render 'new'
