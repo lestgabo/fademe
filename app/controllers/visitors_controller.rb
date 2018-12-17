@@ -15,24 +15,15 @@ class VisitorsController < ApplicationController
       mailchimp = Gibbon::Request.new(api_key: Rails.application.credentials[Rails.env.to_sym][:mailchimp_api_key], symbolize_keys: true)
       list_id = Rails.application.credentials[Rails.env.to_sym][:mailchimp_list_id]
       member_id = Digest::MD5.hexdigest(input_email)
-      
-      begin
-        member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
-      rescue Exception => e
-        Rails.logger.info(e)      
-      end
+   
+      mailchimp.lists(list_id).members(member_id).upsert(
+        body: {
+          email_address: input_email,
+          status: 'subscribed'
+        }
+      )
+      flash[:notice] = "Thank you for signing up #{input_email}!"
 
-      if member_status == "subscribed"
-        flash[:notice] = "You are already subscribed!"
-      else
-        mailchimp.lists(list_id).members(member_id).upsert(
-          body: {
-            email_address: input_email,
-            status: 'subscribed'
-          }
-        )
-        flash[:notice] = "Thank you for signing up #{input_email}!"
-      end  
       redirect_to root_path
     else
       render 'new'
