@@ -16,7 +16,7 @@ class VisitorsController < ApplicationController
       list_id = Rails.application.credentials[Rails.env.to_sym][:mailchimp_list_id]
       member_id = Digest::MD5.hexdigest(input_email)
    
-      mailchimp.lists(list_id).members(member_id).upsert(
+      mailchimp.lists(list_id).members(member_id).create(
         body: {
           email_address: input_email,
           status: 'subscribed'
