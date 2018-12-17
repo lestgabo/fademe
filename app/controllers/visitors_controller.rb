@@ -24,7 +24,7 @@ class VisitorsController < ApplicationController
         Rails.logger.error("failed becuz #{exception.detail}")
       end
 
-      if member_status != "subscribed" && member_status != "unsubscribed"
+      if member_status == nil
         result = mailchimp.lists(list_id).members.create(
           body: {
             email_address: input_email,
@@ -32,15 +32,13 @@ class VisitorsController < ApplicationController
           })
         Rails.logger.info("Subscribed #{input_email} to MailChimp") if result
         flash[:notice] = "Thank you for signing up #{input_email}!"
-        redirect_to root_path
       elsif member_status == "subscribed"
         flash[:notice] = "You are already subscribed!"
-        redirect_to root_path
       elsif member_status == "unsubscribed"
         flash[:danger] = "You already unsubscribed!"
-        redirect_to root_path
+        
       end
-
+      redirect_to root_path
     else
       render 'new'
     end
