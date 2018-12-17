@@ -20,7 +20,7 @@ class VisitorsController < ApplicationController
 
       begin
         member_status = mailchimp.lists(list_id).members(member_id).retrieve.body[:status]
-      rescue Gibbon::MailChimpError => exception
+      rescue Exception
         Rails.logger.error("failed becuz #{exception.detail}")
       end
 
